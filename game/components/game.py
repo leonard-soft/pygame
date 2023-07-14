@@ -1,9 +1,15 @@
 import pygame
+import os
+from time import sleep
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from game.components.spaceship import spaceShip
+from game.components.start_animation import startClass
+from game.utils.constants import SPACESHIP
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, MENU_MUSIC
 
 
-class Game:
+
+class Game():
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(TITLE)
@@ -14,16 +20,23 @@ class Game:
         self.game_speed = 10
         self.x_pos_bg = 0
         self.y_pos_bg = 0
+        self.player = spaceShip()
 
     def run(self):
         # Game loop: events - update - draw
+        pygame.mixer.music.load(MENU_MUSIC)
+        pygame.mixer.music.play(4)
+
+        startClass.draw_animation()
+        sleep(3)
+
         self.playing = True
         while self.playing:
             self.events()
             self.update()
             self.draw()
         pygame.display.quit()
-        pygame.quit()
+        pygame.quit() 
 
     def events(self):
         for event in pygame.event.get():
@@ -31,13 +44,15 @@ class Game:
                 self.playing = False
 
     def update(self):
-        pass
+        user_input = pygame.key.get_pressed()
+        self.player.update(user_input)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
-        pygame.display.update()
+        self.player.draw(self.screen)
+        #pygame.display.update()
         pygame.display.flip()
 
     def draw_background(self):
