@@ -31,9 +31,9 @@ class spaceShip(Sprite):
         elif (user_input[pygame.K_RIGHT] and user_input[pygame.K_DOWN]):
             self.valid_y_pos_down(self.move_right_and_down)
         elif user_input[pygame.K_LEFT]:
-            self.move_left()
+            self.valid_x_pos(self.move_left)
         elif user_input[pygame.K_RIGHT]:
-            self.move_right()
+            self.valid_x_pos_right(self.move_right)
         elif user_input[pygame.K_UP]:
             self.valid_y_pos_up(self.move_up)
         elif user_input[pygame.K_DOWN]:
@@ -46,6 +46,16 @@ class spaceShip(Sprite):
     def valid_y_pos_down(self, func):
         if self.rect.y < 540:
             func()
+
+    def valid_x_pos(self, func):
+        if self.rect.x < -40:
+            self.rect.x = 1340
+        func()
+
+    def valid_x_pos_right(self, func):
+        if self.rect.x > 1340:
+            self.rect.x = -40
+        func()
 
     def draw(self, screen):
         screen.blit(self.image,(self.rect.x, self.rect.y))
