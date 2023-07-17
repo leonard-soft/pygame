@@ -2,8 +2,10 @@ import pygame
 import os
 from time import sleep
 
+from game.components.enemies.enemy_manager import EnemyManager
 from game.components.spaceship import spaceShip
 from game.components.start_animation import startClass
+from game.components.menu import main_menu
 from game.utils.constants import SPACESHIP
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, MENU_MUSIC
 
@@ -21,6 +23,7 @@ class Game():
         self.x_pos_bg = 0
         self.y_pos_bg = 0
         self.player = spaceShip()
+        self.enemy_manager = EnemyManager()
 
     def run(self):
         # Game loop: events - update - draw
@@ -28,7 +31,10 @@ class Game():
         pygame.mixer.music.play(4)
 
         startClass.draw_animation()
-        sleep(3)
+        sleep(2)
+
+        main_menu.draw_background()
+        sleep(1)
 
         self.playing = True
         while self.playing:
@@ -46,13 +52,18 @@ class Game():
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
+        self.enemy_manager.update()
+        self.enemy_manager.update()
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
-        #pygame.display.update()
+
+        # 2 enemies
+        self.enemy_manager.draw(self.screen)
+
         pygame.display.flip()
 
     def draw_background(self):

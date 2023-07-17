@@ -31,11 +31,7 @@ class Start:
         clock = pygame.time.Clock()
 
         while running:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-
+            
             # Background fade animation
             if alpha < 255:
                 alpha += 5
@@ -52,7 +48,7 @@ class Start:
             pygame.display.flip()
             clock.tick(30)
 
-            if ejc > 65:
+            if ejc > 50:
                 running = False
             ejc += 4
 

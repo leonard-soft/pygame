@@ -10,7 +10,7 @@ class spaceShip(Sprite):
     SHIP_HEIGHT = 60
     X_POS = 650
     Y_POS = 500
-    SHIP_SPEED = 12
+    SHIP_SPEED = 8
 
     
     def __init__(self):
@@ -22,23 +22,39 @@ class spaceShip(Sprite):
 
     def update(self, user_input):
 
+        # left and up
         if (user_input[pygame.K_LEFT] and user_input[pygame.K_UP]):
             self.valid_y_pos_up(self.move_left_and_up)
-        elif (user_input[pygame.K_LEFT] and user_input[pygame.K_DOWN]):
+
+        # left and down
+        if (user_input[pygame.K_LEFT] and user_input[pygame.K_DOWN]):
             self.valid_y_pos_down(self.move_left_and_down)
-        elif (user_input[pygame.K_RIGHT] and user_input[pygame.K_UP]):
+
+        # right and up
+        if (user_input[pygame.K_RIGHT] and user_input[pygame.K_UP]):
             self.valid_y_pos_up(self.move_right_and_up)
-        elif (user_input[pygame.K_RIGHT] and user_input[pygame.K_DOWN]):
+
+        # right and down
+        if (user_input[pygame.K_RIGHT] and user_input[pygame.K_DOWN]):
             self.valid_y_pos_down(self.move_right_and_down)
-        elif user_input[pygame.K_LEFT]:
+
+        # left
+        if user_input[pygame.K_LEFT]:
             self.valid_x_pos(self.move_left)
-        elif user_input[pygame.K_RIGHT]:
+
+        # right
+        if user_input[pygame.K_RIGHT]:
             self.valid_x_pos_right(self.move_right)
-        elif user_input[pygame.K_UP]:
+
+        # up
+        if user_input[pygame.K_UP]:
             self.valid_y_pos_up(self.move_up)
-        elif user_input[pygame.K_DOWN]:
+
+        # down
+        if user_input[pygame.K_DOWN]:
             self.valid_y_pos_down(self.move_down)
 
+    # methods that validate the position of the ship
     def valid_y_pos_up(self, func):
         if self.rect.y > 10:
             func()
@@ -57,9 +73,11 @@ class spaceShip(Sprite):
             self.rect.x = -40
         func()
 
+    # draw method
     def draw(self, screen):
         screen.blit(self.image,(self.rect.x, self.rect.y))
 
+    # move methods
     def move_left(self):
         self.rect.x -= self.SHIP_SPEED
 
