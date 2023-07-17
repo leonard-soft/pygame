@@ -1,42 +1,94 @@
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import IMG_DIR
+from game.components.game_func import Games
 import pygame
+import sys
 import os
 
 
+# class games
+games_op = Games()
+
 class Menu:
+    def __init__(self, width, height, options):
+        self.width = width
+        self.height = height
+        self.options = options
+        self.selected_option = 0
 
-    # class atributes
-    IMAGES_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
-    SCREEN_WIDTH = 1300
-    SCREEN_HEIGHT = 600
+        # Inicializar Pygame
+        pygame.init()
 
-    def __init__(self):
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.image = pygame.image.load(os.path.join(self.IMAGES_DIR, 'Other/bg_02_h.png'))
-        self.title_img = pygame.image.load(os.path.join(self.IMAGES_DIR, 'menu/image.png'))
+        # Configuración de la ventana
+        self.screen = pygame.display.set_mode((self.width, self.height))
 
-    def draw_background(self):
+        # Colores
+        self.BLACK = (0, 0, 0)
+        self.WHITE = (255, 255, 255)
 
-        # rect
-        logo_rect = self.title_img.get_rect()
-        logo_rect.center = (self.SCREEN_WIDTH // 2, 250 // 2)
+        # Fuente
+        self.font = pygame.font.Font(None, 40)
 
+    def run(self, result):
+        image = pygame.image.load(os.path.join(IMG_DIR, 'Other/bg_02_h.png'))
+
+        # Bucle principal del programa
         running = True
-        clock = pygame.time.Clock()
-        # count
-        ejc = 0
-
         while running:
+            for event in pygame.event.get():
 
-            self.screen.blit(self.image, (0,0))        
-            self.screen.blit(self.title_img, logo_rect)
-        
+                if event.type == pygame.QUIT:
+                    running = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        self.selected_option = (self.selected_option - 1) % len(self.options)
+                    elif event.key == pygame.K_DOWN:
+                        self.selected_option = (self.selected_option + 1) % len(self.options)
+                    elif event.key == pygame.K_RETURN:
+                        if self.selected_option == len(self.options) - 1:
+                            running = False
+                        else:
+                            print("Seleccionaste:", self.options[self.selected_option])
+                            result = self.options[self.selected_option]
+                            if result == 'PLAY':
+                                self.options = []
+                                width = 1300
+                                height = 600
+                                screen = pygame.display.set_mode((width, height))
+                                while True:
+                                    try:
+                                        if event.type == pygame.KEYDOWN:
+                                            if event.key == pygame.K_RETURN:  
+                                                pass
+                                    except:
+                                       pass
+
+                                    games_op.events()
+                                    games_op.update()
+                                    games_op.draw()
+                                pygame.display.quit()
+                                pygame.quit()
+
+
+            # Limpiar la pantalla
+            self.screen.blit(image, (0,0))
+
+            # Dibujar las opciones
+            for i in range(len(self.options)):
+                text = self.font.render(self.options[i], True, self.WHITE)
+                if i == self.selected_option:
+                    pygame.draw.rect(self.screen, self.WHITE, (self.width // 2 - 100, 800 // 2 - 100 + i * 50, 200, 40), 2)
+                self.screen.blit(text, (self.width // 2 - text.get_width() // 2, 800 // 2 - 100 + i * 50))
+
+            # Actualizar la pantalla
             pygame.display.flip()
-            clock.tick(30)
-        
-            if ejc > 30:
-                running = False
-            ejc += 4
+
+        # Salir del programa
+        pygame.quit()
+        sys.exit()
+
+# Uso de la clase Menu
+options = ["PLAY","EXIT"]
+menu = Menu(1300, 600, options)
 
 
-main_menu = Menu()
