@@ -1,4 +1,4 @@
-from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT
+from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN
 import pygame
 import sys
 
@@ -46,7 +46,7 @@ class BulletManager:
             self.enemy_bullets.append(bullet)
 
         if bullet.owner == 'player':
-            shot_sound = pygame.mixer.Sound(SHOT_EFFECT)
+            shot_sound = pygame.mixer.Sound(SPACE_GUN)
             pygame.mixer.Sound.play(shot_sound)
             self.bullets.append(bullet)
 
