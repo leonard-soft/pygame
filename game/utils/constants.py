@@ -34,6 +34,6 @@ ENEMY_4 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 FONT_STYLE = 'freesansbold.ttf'
 
 # music
-
 MENU_MUSIC = os.path.join(SOUNDS_DIR, "menu.mp3")
-
+SELECT_SOUND = os.path.join(SOUNDS_DIR, "select.mp3")
+SELECTED_SOUND = os.path.join(SOUNDS_DIR, "selected.mp3")

@@ -1,5 +1,6 @@
 from game.utils.constants import IMG_DIR
 from game.components.game_func import Games
+from game.utils.constants import SELECT_SOUND, SELECTED_SOUND
 import pygame
 import sys
 import os
@@ -9,6 +10,9 @@ import os
 games_op = Games()
 
 class Menu:
+
+    GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/image.png'))
+
     def __init__(self, width, height, options):
         self.width = width
         self.height = height
@@ -17,6 +21,7 @@ class Menu:
 
         # Inicializar Pygame
         pygame.init()
+        pygame.mixer.init()
 
         # Configuración de la ventana
         self.screen = pygame.display.set_mode((self.width, self.height))
@@ -42,12 +47,23 @@ class Menu:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.selected_option = (self.selected_option - 1) % len(self.options)
+                        sound = pygame.mixer.Sound(SELECT_SOUND)
+                        pygame.mixer.Sound.play(sound)
+
                     elif event.key == pygame.K_DOWN:
                         self.selected_option = (self.selected_option + 1) % len(self.options)
+                        sound = pygame.mixer.Sound(SELECT_SOUND)
+                        pygame.mixer.Sound.play(sound)
+
                     elif event.key == pygame.K_RETURN:
                         if self.selected_option == len(self.options) - 1:
+                            sound = pygame.mixer.Sound(SELECTED_SOUND)
+                            pygame.mixer.Sound.play(sound)
                             running = False
+
                         else:
+                            sound = pygame.mixer.Sound(SELECTED_SOUND)
+                            pygame.mixer.Sound.play(sound)
                             print("Seleccionaste:", self.options[self.selected_option])
                             result = self.options[self.selected_option]
                             if result == 'PLAY':
@@ -55,11 +71,15 @@ class Menu:
                                 width = 1300
                                 height = 600
                                 screen = pygame.display.set_mode((width, height))
+                                
                                 while True:
                                     try:
                                         if event.type == pygame.KEYDOWN:
                                             if event.key == pygame.K_RETURN:  
                                                 pass
+                                            else:
+                                                if event.key == pygame.K_ESCAPE:
+                                                    break
                                     except:
                                        pass
 
@@ -72,13 +92,14 @@ class Menu:
 
             # Limpiar la pantalla
             self.screen.blit(image, (0,0))
+            self.screen.blit(self.GAME_TITLE, (410, 100))
 
             # Dibujar las opciones
             for i in range(len(self.options)):
                 text = self.font.render(self.options[i], True, self.WHITE)
                 if i == self.selected_option:
-                    pygame.draw.rect(self.screen, self.WHITE, (self.width // 2 - 100, 800 // 2 - 100 + i * 50, 200, 40), 2)
-                self.screen.blit(text, (self.width // 2 - text.get_width() // 2, 800 // 2 - 100 + i * 50))
+                    pygame.draw.rect(self.screen, self.WHITE, (self.width // 2 - 100, 1000 // 2 - 100 + i * 50, 200, 40), 2)
+                self.screen.blit(text, (self.width // 2 - text.get_width() // 2, 1000 // 2 - 100 + i * 50))
 
             # Actualizar la pantalla
             pygame.display.flip()
