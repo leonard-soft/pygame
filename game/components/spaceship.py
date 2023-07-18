@@ -56,6 +56,7 @@ class spaceShip(Sprite):
         if user_input[pygame.K_DOWN]:
             self.valid_y_pos_down(self.move_down)
 
+        # shot
         if user_input[pygame.K_p]:
             self.shoot(game.bullet_manager)
 

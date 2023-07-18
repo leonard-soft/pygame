@@ -30,7 +30,17 @@ class BulletManager:
     def update_player_b(self, game_func):
         for bullet in self.bullets:
             bullet.update_player_bullets(self.bullets)
-       
+
+            # enemy logic destroy
+            for enemy in game_func.enemy_manager.enemies: 
+                if bullet.rect.colliderect(enemy) and bullet.owner == 'player':
+
+                    # sound
+                    sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
+                    pygame.mixer.Sound.play(sound)
+
+                    self.bullets.remove(bullet)
+                    game_func.enemy_manager.enemies.remove(enemy)           
     
     # draw methods
     def draw_enemy_bullet(self, screen):
