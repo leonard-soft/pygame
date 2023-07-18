@@ -66,28 +66,24 @@ class Menu:
                             pygame.mixer.Sound.play(sound)
                             print("Seleccionaste:", self.options[self.selected_option])
                             result = self.options[self.selected_option]
+
                             if result == 'PLAY':
                                 self.options = []
-                                width = 1300
-                                height = 600
-                                screen = pygame.display.set_mode((width, height))
                                 
-                                while True:
-                                    try:
-                                        if event.type == pygame.KEYDOWN:
-                                            if event.key == pygame.K_RETURN:  
-                                                pass
-                                            else:
-                                                if event.key == pygame.K_ESCAPE:
-                                                    break
-                                    except:
-                                       pass
+                                running = True
+                                while running:
+
+                                    key = pygame.key.get_pressed()
+                                    if key[pygame.K_RSHIFT]:
+                                        running = False
 
                                     games_op.events()
                                     games_op.update()
                                     games_op.draw()
-                                pygame.display.quit()
-                                pygame.quit()
+                                self.options = ['PLAY', 'EXIT']
+                                self.GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/pause.png'))
+                                self.screen.blit(self.GAME_TITLE, (800, 100))
+                                self.run(result)
 
 
             # Limpiar la pantalla
