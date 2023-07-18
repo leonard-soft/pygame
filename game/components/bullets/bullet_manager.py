@@ -25,7 +25,6 @@ class BulletManager:
                 pygame.quit()
                 sys.exit()
 
-
     def update_player_b(self, game_func):
         for bullet in self.bullets:
             bullet.update_player_bullets(self.bullets)
