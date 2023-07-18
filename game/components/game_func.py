@@ -1,14 +1,14 @@
 import pygame
-import os
-from time import sleep
+import sys
 
+from game.components.bullets.bullet_manager import BulletManager
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.spaceship import spaceShip
 from game.components.start_animation import startClass
 from game.utils.constants import SPACESHIP
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, MENU_MUSIC
 
-class Games():
+class Games:
 
     def __init__(self):
         pygame.init()
@@ -21,28 +21,33 @@ class Games():
         self.x_pos_bg = 0
         self.y_pos_bg = 0
         self.player = spaceShip()
-        self.player_option_result = ""
         self.enemy_manager = EnemyManager()
+        self.bullet_manager = BulletManager()
 
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
+                pygame.quit()
+                sys.exit()
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player.update(user_input)
-        self.enemy_manager.update()
-        self.enemy_manager.update()
+        user_key = pygame.key.get_focused()
+        self.player.update(user_input, self)
+        self.enemy_manager.update(self)
+        self.bullet_manager.update_player_b(self)
+        self.bullet_manager.update_enemy_b(self)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
-
         # 2 enemies
         self.enemy_manager.draw(self.screen)
+        self.bullet_manager.draw_enemy_bullet(self.screen)
+        self.bullet_manager.draw_player_bullet(self.screen)
 
         pygame.display.flip()
 

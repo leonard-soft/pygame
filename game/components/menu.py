@@ -1,6 +1,6 @@
 from game.utils.constants import IMG_DIR
 from game.components.game_func import Games
-from game.utils.constants import SELECT_SOUND, SELECTED_SOUND
+from game.utils.constants import SELECT_SOUND, SELECTED_SOUND, PAUSE_EFFECT
 import pygame
 import sys
 import os
@@ -70,20 +70,23 @@ class Menu:
                             if result == 'PLAY':
                                 self.options = []
                                 
-                                running = True
-                                while running:
+                                games_op.playing = True
+                                while games_op.playing:
 
                                     key = pygame.key.get_pressed()
                                     if key[pygame.K_RSHIFT]:
-                                        running = False
+                                        sound = pygame.mixer.Sound(PAUSE_EFFECT)
+                                        pygame.mixer.Sound.play(sound)
+                                        
+                                        self.options = ['PLAY', 'EXIT']
+                                        self.GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/pause.png'))
+                                        self.screen.blit(self.GAME_TITLE, (800, 100))
+                                        self.run(result)
 
                                     games_op.events()
                                     games_op.update()
                                     games_op.draw()
-                                self.options = ['PLAY', 'EXIT']
-                                self.GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/pause.png'))
-                                self.screen.blit(self.GAME_TITLE, (800, 100))
-                                self.run(result)
+                                
 
 
             # Limpiar la pantalla

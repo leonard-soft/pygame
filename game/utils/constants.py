@@ -33,7 +33,14 @@ ENEMY_4 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 
 FONT_STYLE = 'freesansbold.ttf'
 
+# game over
+GAME_OVER_BACKGROUND = pygame.image.load(os.path.join(IMG_DIR, "Other/Track.jpg"))
+GAME_OVER_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'Other/GameOver.png'))
+
 # music
 MENU_MUSIC = os.path.join(SOUNDS_DIR, "menu.mp3")
 SELECT_SOUND = os.path.join(SOUNDS_DIR, "select.mp3")
 SELECTED_SOUND = os.path.join(SOUNDS_DIR, "selected.mp3")
+PAUSE_EFFECT = os.path.join(SOUNDS_DIR, "pause.mp3")
+EXPLOSION_EFFECT = os.path.join(SOUNDS_DIR, "explosion.mp3")
+SHOT_EFFECT = os.path.join(SOUNDS_DIR, "shot.mp3")

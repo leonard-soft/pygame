@@ -1,6 +1,7 @@
 from pygame.sprite import Sprite
 import pygame
 
+from game.components.bullets.bullet import Bullet
 from game.utils.constants import SCREEN_WIDTH, SPACESHIP
 
 class spaceShip(Sprite):
@@ -19,8 +20,9 @@ class spaceShip(Sprite):
         self.rect =  self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
+        self.type = 'player'
 
-    def update(self, user_input):
+    def update(self, user_input, game):
 
         # left and up
         if (user_input[pygame.K_LEFT] and user_input[pygame.K_UP]):
@@ -53,6 +55,9 @@ class spaceShip(Sprite):
         # down
         if user_input[pygame.K_DOWN]:
             self.valid_y_pos_down(self.move_down)
+
+        if user_input[pygame.K_p]:
+            self.shoot(game.bullet_manager)
 
     # methods that validate the position of the ship
     def valid_y_pos_up(self, func):
@@ -105,3 +110,7 @@ class spaceShip(Sprite):
     def move_right_and_down(self):
         self.rect.x += self.SHIP_SPEED
         self.rect.y += self.SHIP_SPEED
+
+    def shoot(self, bullet_manager):
+        bullet = Bullet(self)
+        bullet_manager.add_bullet(bullet)
