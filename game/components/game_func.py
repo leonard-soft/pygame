@@ -42,6 +42,7 @@ class Games:
         self.bullet_manager.update_player_b(self)
         self.bullet_manager.update_enemy_b(self)
         self.update_score()
+        self.update_death_count()
 
     def draw(self):
         self.clock.tick(FPS)
@@ -53,7 +54,7 @@ class Games:
         self.bullet_manager.draw_enemy_bullet(self.screen)
         self.bullet_manager.draw_player_bullet(self.screen)
         self.draw_score()
-        
+        self.draw_death_count()
 
         pygame.display.flip()
 
@@ -75,3 +76,12 @@ class Games:
     def draw_score(self):
         text = self.update_score()
         self.screen.blit(text, (20,20))
+
+    def update_death_count(self):
+        message_text = f'DEATH COUNT : {self.death_count}'
+        text = self.font.render(message_text, True, (255, 255, 255))
+        return text
+    
+    def draw_death_count(self):
+        text = self.update_death_count()
+        self.screen.blit(text, (1130,20))

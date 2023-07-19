@@ -1,4 +1,6 @@
 from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN, FONT_STYLE
+from game.components.GameOver import menu
+
 import pygame
 import os
 import sys
@@ -19,14 +21,14 @@ class BulletManager:
                 # sound
                 sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
                 pygame.mixer.Sound.play(sound)
-
-                self.enemy_bullets.remove(bullet)
-                game_func.playing = False
-                self.draw_game_over(game_func.screen)
-                pygame.time.delay(2000)
                 game_func.death_count += 1
+
+                for enemy in game_func.enemy_manager.enemies:
+                    game_func.enemy_manager.enemies.remove(enemy)
+
+                menu.run(game_func)
+                self.enemy_bullets.remove(bullet)
                  
-                sys.exit()
        
 
     # update enemy
@@ -41,7 +43,7 @@ class BulletManager:
                     # sound
                     sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
                     pygame.mixer.Sound.play(sound)
-
+                   
                     self.bullets.remove(bullet)
                     game_func.enemy_manager.enemies.remove(enemy)
 
