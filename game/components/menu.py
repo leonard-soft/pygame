@@ -78,19 +78,17 @@ class Menu:
                                         sound = pygame.mixer.Sound(PAUSE_EFFECT)
                                         pygame.mixer.Sound.play(sound)
                                         
-                                        self.options = ['CONTINUE', 'MAIN MENU']
+                                        self.options = ['CONTINUE']
                                         self.GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/pause.png'))
                                         self.screen.blit(self.GAME_TITLE, (800, 100))
                                         self.run(result)
-
-                                        if result == 'MAIN MENU':
-                                            games_op.playing = False
 
                                     games_op.events()
                                     games_op.update()
                                     games_op.draw()
                                 
                                 self.options = ['PLAY', 'EXIT']
+                                self.GAME_TITLE =  pygame.image.load(os.path.join(IMG_DIR, 'menu/image.png'))
                                 
             # Clean window
             self.screen.blit(image, (0,0))
