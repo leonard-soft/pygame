@@ -1,5 +1,6 @@
-from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN
+from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN, FONT_STYLE
 import pygame
+import os
 import sys
 
 
@@ -8,6 +9,7 @@ class BulletManager:
     def __init__(self):
         self.bullets = []
         self.enemy_bullets = []
+        self.res = ''
 
     # update enemy
     def update_enemy_b(self, game_func):
@@ -22,9 +24,10 @@ class BulletManager:
                 game_func.playing = False
                 self.draw_game_over(game_func.screen)
                 pygame.time.delay(2000)
-                running = False
-                pygame.quit()
+                game_func.death_count += 1
+                 
                 sys.exit()
+       
 
     # update enemy
     def update_player_b(self, game_func):
@@ -40,7 +43,10 @@ class BulletManager:
                     pygame.mixer.Sound.play(sound)
 
                     self.bullets.remove(bullet)
-                    game_func.enemy_manager.enemies.remove(enemy)           
+                    game_func.enemy_manager.enemies.remove(enemy)
+
+                    # score logic
+                    game_func.score += 100       
     
     # draw methods
     def draw_enemy_bullet(self, screen):
@@ -75,3 +81,6 @@ class BulletManager:
         screen.blit(GAME_OVER_TITLE, (480,200))
         pygame.display.flip()
         
+    
+
+    

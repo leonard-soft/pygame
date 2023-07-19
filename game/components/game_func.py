@@ -6,7 +6,7 @@ from game.components.enemies.enemy_manager import EnemyManager
 from game.components.spaceship import spaceShip
 from game.components.start_animation import startClass
 from game.utils.constants import SPACESHIP
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, MENU_MUSIC
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, MENU_MUSIC, FONT_STYLE
 
 class Games:
 
@@ -23,6 +23,9 @@ class Games:
         self.player = spaceShip()
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
+        self.score = 0
+        self.death_count = 0
+        self.font = pygame.font.Font(FONT_STYLE, 15)
 
     def events(self):
         for event in pygame.event.get():
@@ -38,6 +41,7 @@ class Games:
         self.enemy_manager.update(self)
         self.bullet_manager.update_player_b(self)
         self.bullet_manager.update_enemy_b(self)
+        self.update_score()
 
     def draw(self):
         self.clock.tick(FPS)
@@ -48,6 +52,8 @@ class Games:
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw_enemy_bullet(self.screen)
         self.bullet_manager.draw_player_bullet(self.screen)
+        self.draw_score()
+        
 
         pygame.display.flip()
 
@@ -60,3 +66,12 @@ class Games:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
+
+    def update_score(self):
+        message_text = f'SCORE : {self.score}'
+        text = self.font.render(message_text, True, (255, 255, 255))
+        return text
+    
+    def draw_score(self):
+        text = self.update_score()
+        self.screen.blit(text, (20,20))

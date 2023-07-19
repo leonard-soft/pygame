@@ -1,6 +1,9 @@
+# constants and components
 from game.utils.constants import IMG_DIR
 from game.components.game_func import Games
-from game.utils.constants import SELECT_SOUND, SELECTED_SOUND, PAUSE_EFFECT
+from game.utils.constants import SELECT_SOUND, SELECTED_SOUND, PAUSE_EFFECT, SCREEN_WIDTH, SCREEN_HEIGHT
+
+# import libreries
 import pygame
 import sys
 import os
@@ -10,37 +13,34 @@ import os
 games_op = Games()
 
 class Menu:
+    
+    # Inicializar Pygame
+    pygame.init()
+    pygame.mixer.init()
 
+    # constant
     GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/image.png'))
 
-    def __init__(self, width, height, options):
-        self.width = width
-        self.height = height
+    def __init__(self, options):
+        self.width = SCREEN_WIDTH
+        self.height = SCREEN_HEIGHT
         self.options = options
         self.selected_option = 0
-
-        # Inicializar Pygame
-        pygame.init()
-        pygame.mixer.init()
-
-        # Configuración de la ventana
         self.screen = pygame.display.set_mode((self.width, self.height))
-
-        # Colores
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
-
-        # Fuente
         self.font = pygame.font.Font(None, 40)
 
+
     def run(self, result):
+
+        # background image
         image = pygame.image.load(os.path.join(IMG_DIR, 'Other/bg_02_h.png'))
 
-        # Bucle principal del programa
+        # while True
         running = True
         while running:
             for event in pygame.event.get():
-
                 if event.type == pygame.QUIT:
                     running = False
 
@@ -78,7 +78,7 @@ class Menu:
                                         sound = pygame.mixer.Sound(PAUSE_EFFECT)
                                         pygame.mixer.Sound.play(sound)
                                         
-                                        self.options = ['PLAY', 'EXIT']
+                                        self.options = ['CONTINUE']
                                         self.GAME_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'menu/pause.png'))
                                         self.screen.blit(self.GAME_TITLE, (800, 100))
                                         self.run(result)
@@ -87,28 +87,23 @@ class Menu:
                                     games_op.update()
                                     games_op.draw()
                                 
-
-
-            # Limpiar la pantalla
+            # Clean window
             self.screen.blit(image, (0,0))
             self.screen.blit(self.GAME_TITLE, (410, 100))
 
-            # Dibujar las opciones
+            # Draw options
             for i in range(len(self.options)):
                 text = self.font.render(self.options[i], True, self.WHITE)
                 if i == self.selected_option:
                     pygame.draw.rect(self.screen, self.WHITE, (self.width // 2 - 100, 1000 // 2 - 100 + i * 50, 200, 40), 2)
                 self.screen.blit(text, (self.width // 2 - text.get_width() // 2, 1000 // 2 - 100 + i * 50))
 
-            # Actualizar la pantalla
+            # update window
             pygame.display.flip()
 
-        # Salir del programa
-        pygame.quit()
-        sys.exit()
 
 # Uso de la clase Menu
 options = ["PLAY","EXIT"]
-menu = Menu(1300, 600, options)
+menu = Menu(options)
 
 
