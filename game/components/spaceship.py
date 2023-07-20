@@ -61,7 +61,7 @@ class spaceShip(Sprite):
 
         # shot
         if user_input[pygame.K_p]:
-            self.shoot(game.bullet_manager)
+            self.shoot(game.bullet_manager, game)
 
     # methods that validate the position of the ship
     def valid_y_pos_up(self, func):
@@ -115,9 +115,9 @@ class spaceShip(Sprite):
         self.rect.x += self.SHIP_SPEED
         self.rect.y += self.SHIP_SPEED
 
-    def shoot(self, bullet_manager):
+    def shoot(self, bullet_manager, game):
         bullet = Bullet(self)
-        bullet_manager.add_bullet(bullet)
+        bullet_manager.add_bullet(bullet, game)
 
     def set_image(self, size = (SHIP_WIDTH, SHIP_HEIGHT), image = SPACESHIP):
         self.image = image

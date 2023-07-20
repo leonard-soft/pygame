@@ -3,11 +3,12 @@ import pygame
 
 from game.components.power_ups.shield import Shield
 from game.components.power_ups.score_type import Score
+from game.components.power_ups.clock import Clock
 from game.utils.constants import SPACESHIP_SHIELD , POWER
 
 class PowerUpManager:
     def __init__(self):
-        self.power_ups_types = ['shield', 'score']
+        self.power_ups_types = ['shield', 'score', 'clock']
         self.power_up_name = ''
         self.power_ups = []
         self.duration = random.randint(9, 11)
@@ -41,6 +42,14 @@ class PowerUpManager:
                     game.player.has_power_up = True
                     game.player.power_time_up = power_up.start_time + (self.duration * 1000)
                     self.power_ups.remove(power_up)
+
+                if power_up.type == 'clock':
+                    power_up.start_time = pygame.time.get_ticks()
+                    game.player.power_up_type = power_up.type
+                    game.player.has_power_up = True
+                    game.player.power_time_up = power_up.start_time + (self.duration * 1000)
+                    self.power_ups.remove(power_up)
+
     
     def draw(self, screen):
         for power_up in self.power_ups:
@@ -57,5 +66,10 @@ class PowerUpManager:
 
         if name == 'score':
             power_up = Score()
+            self.when_appears += random.randint(5000, 10000)
+            self.power_ups.append(power_up)
+
+        if name == 'clock':
+            power_up = Clock()
             self.when_appears += random.randint(5000, 10000)
             self.power_ups.append(power_up)

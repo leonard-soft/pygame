@@ -32,7 +32,7 @@ class Enemy(Sprite):
 
     def update(self, ships, game):
         self.rect.y += self.speed_y
-        self.shoot(game.bullet_manager)
+        self.shoot(game.bullet_manager, game)
 
         if self.movement_x == 'left':
             self.rect.x -= self.speed_x
@@ -57,9 +57,9 @@ class Enemy(Sprite):
             self.movement_x = 'right'
             self.index=0
 
-    def shoot(self, bullet_manager):
+    def shoot(self, bullet_manager, game):
         current_time = pygame.time.get_ticks()
         if self.shooting_time <= current_time:
             bullet = Bullet(self)
-            bullet_manager.add_bullet(bullet)
+            bullet_manager.add_bullet(bullet, game)
             self.shooting_time += random.randint(30, 50)

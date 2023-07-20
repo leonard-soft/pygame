@@ -12,10 +12,12 @@ SOUNDS_DIR = os.path.join(os.path.dirname(__file__), "..", "sounds")
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship2.gif"))
 SCORE_IMG = pygame.image.load(os.path.join(IMG_DIR, 'Other/plus.png'))
+CLOCK_IMG = pygame.image.load(os.path.join(IMG_DIR, 'Other/clock.png'))
 
 # power up img
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 SCORE = pygame.transform.scale(SCORE_IMG, (50,50))
+CLOCK = pygame.transform.scale(CLOCK_IMG, (50,50))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/back.jpeg'))
 
@@ -25,6 +27,7 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
 SCORE_TYPE = 'score'
+CLOCK_TYPE = 'clock'
 
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship2.gif"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))

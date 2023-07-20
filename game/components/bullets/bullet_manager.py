@@ -1,5 +1,5 @@
 from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN, SHIELD_TYPE
-from game.utils.constants import SCORE_TYPE
+from game.utils.constants import SCORE_TYPE, CLOCK_TYPE
 from game.components.GameOver import menu
 
 import pygame
@@ -18,24 +18,21 @@ class BulletManager:
     def update_enemy_b(self, game_func):
         for bullet in self.enemy_bullets:
             bullet.update_enemy_bullets(self.enemy_bullets)
+
             if bullet.rect.colliderect(game_func.player.rect) and bullet.owner == 'enemy':
 
                 if game_func.player.power_up_type != SHIELD_TYPE:
-
-                    # sound
                     sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
                     pygame.mixer.Sound.play(sound)
                     game_func.death_count += 1
 
                     for enemy in game_func.enemy_manager.enemies:
                         game_func.enemy_manager.enemies.remove(enemy)
-
                 
                     menu.run(game_func)
                     
                 self.enemy_bullets.remove(bullet)
                  
-       
 
     # update enemy
     def update_player_b(self, game_func):
@@ -68,15 +65,18 @@ class BulletManager:
             bullet.draw(screen)
 
     # add bullet method
-    def add_bullet(self, bullet):
+    def add_bullet(self, bullet, game_func):
 
-        # enemy
-        if bullet.owner == 'enemy' and len (self.enemy_bullets)<1:
+        if game_func.player.power_up_type == CLOCK_TYPE:
+                pass
+        else:
+            # enemy
+            if bullet.owner == 'enemy' and len (self.enemy_bullets)<1:
 
-            #sound 
-            shot_sound = pygame.mixer.Sound(SHOT_EFFECT)
-            pygame.mixer.Sound.play(shot_sound)
-            self.enemy_bullets.append(bullet)
+                #sound 
+                shot_sound = pygame.mixer.Sound(SHOT_EFFECT)
+                pygame.mixer.Sound.play(shot_sound)
+                self.enemy_bullets.append(bullet)
 
         # player
         if bullet.owner == 'player':
