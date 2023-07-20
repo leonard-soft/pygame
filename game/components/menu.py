@@ -1,6 +1,7 @@
 # constants and components
 from game.utils.constants import IMG_DIR
 from game.components.game_func import Games
+from game.components.controls import controls
 from game.utils.constants import SELECT_SOUND, SELECTED_SOUND, PAUSE_EFFECT, SCREEN_WIDTH, SCREEN_HEIGHT
 
 # import libreries
@@ -42,7 +43,6 @@ class Menu:
                 if event.type == pygame.QUIT:
                     running = False
                     
-
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.selected_option = (self.selected_option - 1) % len(self.options)
@@ -87,9 +87,21 @@ class Menu:
                                     games_op.update()
                                     games_op.draw()
                                 
-                                self.options = ['PLAY', 'EXIT']
+                                self.options = ['PLAY', 'CONTROLS' ,'EXIT']
                                 self.GAME_TITLE =  pygame.image.load(os.path.join(IMG_DIR, 'menu/image.png'))
                                 
+                            if result == 'CONTROLS':
+                                self.options = []
+
+                                games_op.playing = True
+                                while games_op.playing:
+
+                                    key = pygame.key.get_pressed()
+                                    controls.run(games_op)
+                                
+                                self.options = ['PLAY', 'CONTROLS','EXIT']
+                                self.GAME_TITLE =  pygame.image.load(os.path.join(IMG_DIR, 'menu/image.png'))
+
             # Clean window
             self.screen.blit(image, (0,0))
             self.screen.blit(self.GAME_TITLE, (410, 100))
@@ -106,7 +118,7 @@ class Menu:
 
 
 # Uso de la clase Menu
-options = ["PLAY","EXIT"]
+options = ["PLAY","CONTROLS","EXIT"]
 menu = Menu(options)
 
 

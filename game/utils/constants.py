@@ -37,6 +37,14 @@ FONT_STYLE = 'freesansbold.ttf'
 GAME_OVER_BACKGROUND = pygame.image.load(os.path.join(IMG_DIR, "Other/Track.jpg"))
 GAME_OVER_TITLE = pygame.image.load(os.path.join(IMG_DIR, 'Other/GameOver.png'))
 
+# options menu
+OPTIONS_IMAGE = pygame.image.load(os.path.join(IMG_DIR, "Other/bg_02_h.png"))
+SKY = pygame.image.load(os.path.join(IMG_DIR, "Other/sky2.jpg"))
+UP_IMAGE = pygame.image.load(os.path.join(IMG_DIR, "controls/flechita.png"))
+DOWN_IMAGE = pygame.image.load(os.path.join(IMG_DIR, "controls/flechita2.png"))
+LEFT_IMAGE = pygame.image.load(os.path.join(IMG_DIR, "controls/flechita3.png"))
+RIGHT_IMAGE = pygame.image.load(os.path.join(IMG_DIR, "controls/flechita4.png"))
+
 # music
 MENU_MUSIC = os.path.join(SOUNDS_DIR, "menu.mp3")
 SELECT_SOUND = os.path.join(SOUNDS_DIR, "select.mp3")
