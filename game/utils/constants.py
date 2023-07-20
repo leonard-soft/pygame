@@ -11,15 +11,20 @@ SOUNDS_DIR = os.path.join(os.path.dirname(__file__), "..", "sounds")
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship2.gif"))
+SCORE_IMG = pygame.image.load(os.path.join(IMG_DIR, 'Other/plus.png'))
 
+# power up img
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
+SCORE = pygame.transform.scale(SCORE_IMG, (50,50))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/back.jpeg'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
+# power ups
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
+SCORE_TYPE = 'score'
 
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship2.gif"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))
@@ -53,3 +58,4 @@ PAUSE_EFFECT = os.path.join(SOUNDS_DIR, "pause.mp3")
 EXPLOSION_EFFECT = os.path.join(SOUNDS_DIR, "explosion.mp3")
 SHOT_EFFECT = os.path.join(SOUNDS_DIR, "shot.mp3")
 SPACE_GUN = os.path.join(SOUNDS_DIR, "space_gun.mp3")
+POWER = os.path.join(SOUNDS_DIR, "power.mp3")

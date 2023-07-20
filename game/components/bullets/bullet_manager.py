@@ -1,4 +1,5 @@
 from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN, SHIELD_TYPE
+from game.utils.constants import SCORE_TYPE
 from game.components.GameOver import menu
 
 import pygame
@@ -44,16 +45,18 @@ class BulletManager:
             # enemy logic destroy
             for enemy in game_func.enemy_manager.enemies: 
                 if bullet.rect.colliderect(enemy) and bullet.owner == 'player':
-
+                    
                     # sound
                     sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
-                    pygame.mixer.Sound.play(sound)
-                   
+                    pygame.mixer.Sound.play(sound)    
                     self.bullets.remove(bullet)
                     game_func.enemy_manager.enemies.remove(enemy)
 
                     # score logic
-                    game_func.score += 100       
+                    if game_func.player.power_up_type == SCORE_TYPE:
+                        game_func.score += 500 
+                    else:
+                        game_func.score += 100     
     
     # draw methods
     def draw_enemy_bullet(self, screen):
