@@ -2,7 +2,7 @@ from pygame.sprite import Sprite
 import pygame
 
 from game.components.bullets.bullet import Bullet
-from game.utils.constants import SCREEN_WIDTH, SPACESHIP
+from game.utils.constants import SCREEN_WIDTH, SPACESHIP, DEFAULT_TYPE
 
 class spaceShip(Sprite):
 
@@ -21,6 +21,9 @@ class spaceShip(Sprite):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.type = 'player'
+        self.has_power_up = False
+        self.power_up_type = DEFAULT_TYPE
+        self.power_time_up = 0
 
     def update(self, user_input, game):
 
@@ -115,3 +118,7 @@ class spaceShip(Sprite):
     def shoot(self, bullet_manager):
         bullet = Bullet(self)
         bullet_manager.add_bullet(bullet)
+
+    def set_image(self, size = (SHIP_WIDTH, SHIP_HEIGHT), image = SPACESHIP):
+        self.image = image
+        self.image = pygame.transform.scale(self.image, size)

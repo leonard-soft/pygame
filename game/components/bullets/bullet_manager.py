@@ -1,4 +1,4 @@
-from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN, FONT_STYLE
+from game.utils.constants import GAME_OVER_TITLE, EXPLOSION_EFFECT, SHOT_EFFECT, SPACE_GUN, SHIELD_TYPE
 from game.components.GameOver import menu
 
 import pygame
@@ -18,15 +18,20 @@ class BulletManager:
         for bullet in self.enemy_bullets:
             bullet.update_enemy_bullets(self.enemy_bullets)
             if bullet.rect.colliderect(game_func.player.rect) and bullet.owner == 'enemy':
-                # sound
-                sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
-                pygame.mixer.Sound.play(sound)
-                game_func.death_count += 1
 
-                for enemy in game_func.enemy_manager.enemies:
-                    game_func.enemy_manager.enemies.remove(enemy)
+                if game_func.player.power_up_type != SHIELD_TYPE:
 
-                menu.run(game_func)
+                    # sound
+                    sound = pygame.mixer.Sound(EXPLOSION_EFFECT)
+                    pygame.mixer.Sound.play(sound)
+                    game_func.death_count += 1
+
+                    for enemy in game_func.enemy_manager.enemies:
+                        game_func.enemy_manager.enemies.remove(enemy)
+
+                
+                    menu.run(game_func)
+                    
                 self.enemy_bullets.remove(bullet)
                  
        
