@@ -4,7 +4,7 @@ import pygame
 from game.components.power_ups.shield import Shield
 from game.components.power_ups.score_type import Score
 from game.components.power_ups.clock import Clock
-from game.utils.constants import SPACESHIP_SHIELD , POWER
+from game.utils.constants import SPACESHIP_SHIELD , POWER, SPACESHIP
 
 class PowerUpManager:
     def __init__(self):
@@ -41,6 +41,7 @@ class PowerUpManager:
                     game.player.power_up_type = power_up.type
                     game.player.has_power_up = True
                     game.player.power_time_up = power_up.start_time + (self.duration * 1000)
+                    game.player.set_image((65, 75), SPACESHIP)
                     self.power_ups.remove(power_up)
 
                 if power_up.type == 'clock':
@@ -48,6 +49,7 @@ class PowerUpManager:
                     game.player.power_up_type = power_up.type
                     game.player.has_power_up = True
                     game.player.power_time_up = power_up.start_time + (self.duration * 1000)
+                    game.player.set_image((65, 75), SPACESHIP)
                     self.power_ups.remove(power_up)
 
     
