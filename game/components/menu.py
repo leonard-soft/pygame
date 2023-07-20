@@ -5,9 +5,7 @@ from game.utils.constants import SELECT_SOUND, SELECTED_SOUND, PAUSE_EFFECT, SCR
 
 # import libreries
 import pygame
-import sys
-import os
-
+import os, sys
 
 # class games
 games_op = Games()
@@ -43,6 +41,7 @@ class Menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
@@ -75,6 +74,7 @@ class Menu:
 
                                     key = pygame.key.get_pressed()
                                     if key[pygame.K_RSHIFT]:
+
                                         sound = pygame.mixer.Sound(PAUSE_EFFECT)
                                         pygame.mixer.Sound.play(sound)
                                         

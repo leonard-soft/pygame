@@ -1,7 +1,7 @@
 from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, IMG_DIR, SELECT_SOUND, SELECTED_SOUND
 
 import pygame
-import os
+import os, sys
 
 class Menu:
 
@@ -29,7 +29,9 @@ class Menu:
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    sys.exit()
+
+
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.selected_option = (self.selected_option - 1) % len(self.options)
